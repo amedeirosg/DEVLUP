@@ -3,14 +3,33 @@ import { FaWhatsapp } from "react-icons/fa";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { Star } from "lucide-react";
+import { useState, useEffect } from "react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+
+const projetos = [
+  "/projects/apae_pl.png",
+  "/projects/rany_engenharia.png",
+  "/projects/rany_engenharia.png",
+  "/projects/rany_engenharia.png",
+];
 
 export default function Home() {
+  const [current, setCurrent] = useState(0);
+
+  const nextSlide = () => {
+    setCurrent((prev) => (prev + 1) % projetos.length);
+  };
+
+  const prevSlide = () => {
+    setCurrent((prev) => (prev - 1 + projetos.length) % projetos.length);
+  };
+
   return (
     <main className="min-h-screen bg-white text-gray-900">
       {/* Cabeçalho */}
-      <header className="px-6 py-4 flex justify-between items-center shadow-2xl sticky top-0 bg-white z-50 md:px-40">
+      <header className="bg-black px-6 py-4 flex justify-between items-center shadow-2xl sticky top-0 z-50 md:px-40">
         <Image
-          src="/logo/logo.png"
+          src="/logo/logo_branco.png"
           width={160}
           height={160}
           alt="logo"
@@ -21,7 +40,7 @@ export default function Home() {
           href="https://wa.me/5531996259145"
           target="_blank"
           rel="noopener noreferrer"
-          className="bg-green-500 hover:bg-green-600 text-white text-sm md:text-lg px-4 md:px-6 py-2 md:py-3 rounded-full shadow-md transition-all"
+          className="bg-yellow-500 hover:bg-yellow-600 text-white text-sm md:text-lg px-4 md:px-6 py-2 md:py-3 rounded-full shadow-md transition-all"
         >
           Solicite um orçamento
         </a>
@@ -29,22 +48,9 @@ export default function Home() {
 
       {/* Hero Section */}
       <section
-        className="w-full h-[50vh] px-6 py-20 bg-cover bg-center text-white relative"
+        className="w-full h-[80vh] px-6 py-20 bg-cover bg-center text-white relative"
         style={{ backgroundImage: "url('/banners/banner.png')" }}
       >
-        <div className="absolute bottom-0 left-0 w-full overflow-hidden leading-[0] rotate-180">
-          <svg
-            className="relative block w-[calc(100%+1.3px)] h-[100px]"
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 1200 120"
-            preserveAspectRatio="none"
-          >
-            <path
-              d="M1200 0L0 0 892.25 114.72 1200 0z"
-              className="fill-white"
-            ></path>
-          </svg>
-        </div>
         <div className="max-w-5xl mx-auto text-center relative z-10">
           <motion.h2
             initial={{ opacity: 0, y: -20 }}
@@ -71,7 +77,7 @@ export default function Home() {
               href="https://wa.me/5531996259145" // substitua pelo seu número com DDI + DDD
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-green-500 hover:bg-green-600 text-white px-6 py-3 text-lg rounded-full shadow-xl cursor-pointer inline-block"
+              className="bg-yellow-500 hover:bg-yellow-600 text-white px-6 py-3 text-lg rounded-full shadow-xl cursor-pointer inline-block"
             >
               <FaWhatsapp className="inline-block mr-2" /> Solicite um orçamento
             </a>
@@ -101,7 +107,7 @@ export default function Home() {
           </div>
           <div className="md:w-2/5 w-full h-[250px] md:h-[320px]">
             <Image
-              src="/images/working-code.jpg"
+              src="/images/working-code.png"
               alt="coding"
               width={600}
               height={400}
@@ -112,37 +118,62 @@ export default function Home() {
       </section>
 
       {/* Serviços */}
-      <section className="max-w-5xl mx-auto px-6 py-20">
-        <h2 className="text-3xl font-semibold text-center mb-10">
-          O que fazemos
-        </h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-          {[
-            {
-              title: "Landing Pages",
-              desc: "Páginas rápidas e eficazes para campanhas ou produtos.",
-            },
-            {
-              title: "Sites Institucionais",
-              desc: "Apresente sua empresa com um site completo e moderno.",
-            },
-            {
-              title: "Portfólios",
-              desc: "Mostre seus trabalhos com estilo e profissionalismo.",
-            },
-          ].map((service, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: i * 0.2 }}
-              className="bg-white shadow-md rounded-2xl p-6 border border-gray-200"
-            >
-              <h3 className="text-xl font-bold mb-2">{service.title}</h3>
-              <p className="text-gray-600">{service.desc}</p>
-            </motion.div>
-          ))}
+      <section className="bg-gradient-to-br from-zinc-900 to-black py-20 px-6">
+        <div className="max-w-6xl mx-auto text-center">
+          <h2 className="text-4xl font-bold text-white mb-16">O que fazemos</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
+            {[
+              {
+                title: "Landing Pages",
+                desc: "Ideal para campanhas rápidas, com foco em conversão.",
+                icon: "🚀",
+                tags: ["Alta conversão", "Responsivo", "SEO otimizado"],
+              },
+              {
+                title: "Sites Institucionais",
+                desc: "Apresente sua empresa com autoridade e confiança.",
+                icon: "🏢",
+                tags: ["Design moderno", "Gerenciável", "Google Meu Negócio"],
+              },
+              {
+                title: "Portfólios",
+                desc: "Mostre seus projetos com estilo único e profissional.",
+                icon: "🎨",
+                tags: ["Visual impactante", "Responsivo", "Fácil navegação"],
+              },
+            ].map((service, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: i * 0.2 }}
+                className="bg-white/10 backdrop-blur-md p-8 rounded-3xl border border-zinc-700 hover:border-yellow-400 hover:scale-[1.03] transition-all duration-300 shadow-xl text-white text-left"
+              >
+                <div className="text-5xl mb-4">{service.icon}</div>
+                <h3 className="text-2xl font-semibold mb-2">{service.title}</h3>
+                <p className="text-gray-300">{service.desc}</p>
+
+                <div className="flex flex-wrap gap-2 mt-4">
+                  {service.tags.map((tag, idx) => (
+                    <span
+                      key={idx}
+                      className="bg-yellow-400 text-black text-xs px-2 py-1 rounded-full font-medium"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+
+                <a
+                  href="#portfolio"
+                  className="inline-block mt-6 text-yellow-400 font-medium hover:underline"
+                >
+                  Ver exemplos →
+                </a>
+              </motion.div>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -150,7 +181,7 @@ export default function Home() {
       <section className="bg-gray-100 px-6 py-20">
         <div className="max-w-5xl mx-auto">
           <h2 className="text-3xl font-semibold text-center mb-10">
-            Por que escolher meu serviço?
+            Por que escolher nosso serviço?
           </h2>
           <ul className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             {[
@@ -177,29 +208,72 @@ export default function Home() {
       </section>
 
       {/* Portfólio */}
-      <section className="px-6 py-20 max-w-6xl mx-auto">
-        <h2 className="text-3xl font-semibold text-center mb-10">Portfólio</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-          {["/projects/apae_pl.png", "/projects/rany_engenharia.png"].map(
-            (projeto, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: i * 0.1 }}
-                className="bg-gray-200 h-48 rounded-xl flex items-center justify-center text-gray-600 cursor-pointer hover:scale-110 transition-all "
-              >
-                <Image
-                  src={projeto}
-                  width={600}
-                  height={400}
-                  alt={`Projeto ${i + 1}`}
-                  className="w-full h-full object-cover rounded-xl shadow-2xl"
-                />
-              </motion.div>
-            )
-          )}
+      <section className="bg-neutral-900 px-4 py-20 text-white">
+        <h2 className="text-4xl font-bold text-center mb-12">
+          Portfólio em Destaque
+        </h2>
+
+        <div className="relative max-w-[1200px] mx-auto flex items-center justify-center overflow-hidden">
+          {/* Left Arrow */}
+          <button
+            onClick={prevSlide}
+            className="absolute left-0 z-50 bg-white/10 hover:bg-white/20 rounded-full p-2 cursor-pointer"
+          >
+            <ChevronLeft className="w-6 h-6 text-white" />
+          </button>
+
+          <div className="relative w-full h-[500px] flex items-center justify-center">
+            {projetos.map((projeto, index) => {
+              const total = projetos.length;
+              const relativeIndex = (index - current + total) % total;
+
+              let transformStyle = "";
+              let zIndexClass = "";
+              let brightness = "brightness-50";
+
+              if (relativeIndex === 0) {
+                transformStyle = "scale-110 translate-x-0";
+                zIndexClass = "z-30";
+                brightness = "brightness-100";
+              } else if (relativeIndex === 1) {
+                transformStyle = "translate-x-40 scale-90";
+                zIndexClass = "z-20";
+              } else if (relativeIndex === total - 1) {
+                transformStyle = "-translate-x-40 scale-90";
+                zIndexClass = "z-20";
+              } else {
+                transformStyle = "scale-75 opacity-0 pointer-events-none";
+                zIndexClass = "z-10";
+              }
+
+              return (
+                <div
+                  key={index}
+                  className={`absolute transition-all duration-700 ease-in-out ${transformStyle} ${zIndexClass}`}
+                >
+                  <div
+                    className={`max-w-[90vw] max-h-[500px] aspect-video rounded-xl overflow-hidden shadow-2xl border border-neutral-700 ${brightness}`}
+                  >
+                    <Image
+                      src={projeto}
+                      alt={`Projeto ${index + 1}`}
+                      width={900}
+                      height={500}
+                      className="w-full h-full object-contain"
+                    />
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+
+          {/* Right Arrow */}
+          <button
+            onClick={nextSlide}
+            className="absolute right-0 z-50 bg-white/10 hover:bg-white/20 rounded-full p-2 cursor-pointer"
+          >
+            <ChevronRight className="w-6 h-6 text-white" />
+          </button>
         </div>
       </section>
 
@@ -282,37 +356,41 @@ export default function Home() {
       </section>
 
       {/* FAQ */}
-      <section className="px-6 py-20 max-w-4xl mx-auto">
-        <h2 className="text-3xl font-semibold text-center mb-10">
-          Dúvidas frequentes
-        </h2>
-        <div className="space-y-6">
-          {[
-            {
-              q: "Quanto custa um site?",
-              a: "Depende da complexidade, mas sempre envio um orçamento personalizado.",
-            },
-            {
-              q: "Em quanto tempo fica pronto?",
-              a: "Sites simples ficam prontos em até 7 dias.",
-            },
-            {
-              q: "Você faz manutenção?",
-              a: "Sim! Posso oferecer pacotes mensais ou por demanda.",
-            },
-          ].map((item, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: i * 0.1 }}
-              className="border border-gray-200 rounded-xl p-4 bg-white shadow"
-            >
-              <h3 className="font-semibold mb-2">❓ {item.q}</h3>
-              <p className="text-gray-600">{item.a}</p>
-            </motion.div>
-          ))}
+      <section className="bg-gradient-to-br from-zinc-900 to-black py-20 px-6">
+        <div className="max-w-4xl mx-auto text-center">
+          <h2 className="text-4xl font-bold text-white mb-16">
+            Dúvidas Frequentes
+          </h2>
+          <div className="space-y-6 text-left">
+            {[
+              {
+                q: "Quanto custa um site?",
+                a: "Depende da complexidade, mas sempre envio um orçamento personalizado.",
+              },
+              {
+                q: "Em quanto tempo fica pronto?",
+                a: "Sites simples ficam prontos em até 7 dias.",
+              },
+              {
+                q: "Você faz manutenção?",
+                a: "Sim! Posso oferecer pacotes mensais ou por demanda.",
+              },
+            ].map((item, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: i * 0.15 }}
+                className="bg-white/10 backdrop-blur-md border border-zinc-700 rounded-2xl p-6 shadow-md hover:border-yellow-400 transition-all duration-300"
+              >
+                <h3 className="text-lg font-semibold text-yellow-400 mb-2 flex items-center gap-2">
+                  <span className="text-xl">❓</span> {item.q}
+                </h3>
+                <p className="text-gray-300">{item.a}</p>
+              </motion.div>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -336,9 +414,9 @@ export default function Home() {
             href="https://wa.me/5531996259145" // substitua pelo seu número com DDI + DDD
             target="_blank"
             rel="noopener noreferrer"
-            className="bg-green-500 hover:bg-green-600 text-white px-6 py-3 text-lg rounded-full shadow-xl cursor-pointer inline-block"
+            className="bg-yellow-500 hover:bg-yellow-600 text-white px-6 py-3 text-lg rounded-full shadow-xl cursor-pointer inline-block"
           >
-            <FaWhatsapp className="inline-block mr-2" /> Fale comigo agora
+            <FaWhatsapp className="inline-block mr-2" /> Fale conosco agora
           </a>
         </div>
       </section>
