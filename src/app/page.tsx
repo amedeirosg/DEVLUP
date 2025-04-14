@@ -4,7 +4,7 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { Star } from "lucide-react";
 import { useState, useEffect } from "react";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight, X } from "lucide-react";
 
 const projetos = [
   "/projects/apae_pl.png",
@@ -15,6 +15,8 @@ const projetos = [
 
 export default function Home() {
   const [current, setCurrent] = useState(0);
+
+  const [menuOpen, setMenuOpen] = useState(false);
 
   const nextSlide = () => {
     setCurrent((prev) => (prev + 1) % projetos.length);
@@ -27,62 +29,108 @@ export default function Home() {
   return (
     <main className="min-h-screen bg-white text-gray-900">
       {/* Cabeçalho */}
-      <header className="bg-black px-6 py-4 flex justify-between items-center shadow-2xl sticky top-0 z-50 md:px-40">
-        <Image
-          src="/logo/logo_branco.png"
-          width={160}
-          height={160}
-          alt="logo"
-          onClick={() => (window.location.href = "/")}
-          className="cursor-pointer w-36 md:w-48 h-auto"
-        />
-        <a
-          href="https://wa.me/5531996259145"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="bg-yellow-500 hover:bg-yellow-600 text-white text-sm md:text-lg px-4 md:px-6 py-2 md:py-3 rounded-full shadow-md transition-all"
-        >
-          Solicite um orçamento
-        </a>
-      </header>
-
-      {/* Hero Section */}
       <section
-        className="w-full h-[80vh] px-6 py-20 bg-cover bg-center text-white relative"
-        style={{ backgroundImage: "url('/banners/banner.png')" }}
+        className="w-full h-[100vh] bg-cover bg-center"
+        style={{
+          backgroundImage: "url('/banners/banner-side.png')",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
+        }}
       >
-        <div className="max-w-5xl mx-auto text-center relative z-10">
-          <motion.h2
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="text-4xl sm:text-5xl font-bold mb-6 "
-          >
-            Impulsione sua presença digital
-          </motion.h2>
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-lg text-gray-300 mb-8"
-          >
-            Criação de websites e landing pages com foco em conversão.
-          </motion.p>
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-          >
+        <header className="absolute top-0 left-0 w-full z-10 px-10 py-4 flex justify-between items-center md:px-40 bg-transparent">
+          <Image
+            src="/logo/logo_branco.png"
+            width={160}
+            height={160}
+            alt="logo"
+            onClick={() => (window.location.href = "/")}
+            className="cursor-pointer w-36 md:w-48 h-auto "
+          />
+
+          <div className="md:flex justify-center items-center gap-6 hidden">
+            <ul className="flex gap-6 text-white">
+              <li className="relative cursor-pointer before:content-[''] before:w-0 before:bottom-0 hover:before:w-full before:transition-all before:absolute before:border-b-2 before:border-white">
+                INÍCIO
+              </li>
+              <li className="relative cursor-pointer before:content-[''] before:w-0 before:bottom-0 hover:before:w-full before:transition-all before:absolute before:border-b-2 before:border-white">
+                SOBRE
+              </li>
+              <li className="relative cursor-pointer before:content-[''] before:w-0 before:bottom-0 hover:before:w-full before:transition-all before:absolute before:border-b-2 before:border-white">
+                SERVIÇOS
+              </li>
+              <li className="relative cursor-pointer before:content-[''] before:w-0 before:bottom-0 hover:before:w-full before:transition-all before:absolute before:border-b-2 before:border-white">
+                PORTFÓLIO
+              </li>
+            </ul>
             <a
-              href="https://wa.me/5531996259145" // substitua pelo seu número com DDI + DDD
+              href="https://wa.me/5531996259145"
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-yellow-500 hover:bg-yellow-600 text-white px-6 py-3 text-lg rounded-full shadow-xl cursor-pointer inline-block"
+              className="bg-yellow-500 hover:bg-yellow-600 text-white text-sm md:text-sm px-4 md:px-6 py-2 md:py-3 rounded-full shadow-md transition-all"
             >
-              <FaWhatsapp className="inline-block mr-2" /> Solicite um orçamento
+              Solicite um orçamento
             </a>
-          </motion.div>
-        </div>
+          </div>
+          <div className="flex md:hidden">
+            <div
+              className="flex flex-col gap-1 cursor-pointer "
+              onClick={() => setMenuOpen(true)}
+            >
+              <div className="w-[35px] h-[5px] rounded-sm bg-white "></div>
+              <div className="w-[35px] h-[5px] rounded-sm bg-white "></div>
+              <div className="w-[35px] h-[5px] rounded-sm bg-white "></div>
+            </div>
+
+            <div
+              className={`absolute left-0 top-0 w-full bg-black text-white overflow-hidden rounded-md z-20
+          transition-all duration-300 ease-in-out ${
+            menuOpen ? "max-h-96 py-6" : "max-h-0 "
+          }`}
+            >
+              <div className="flex relative">
+                <X
+                  className="w-6 h-6 cursor-pointer mb-2 absolute right-14"
+                  onClick={() => setMenuOpen(false)}
+                />
+              </div>
+              <ul className="flex flex-col items-center gap-4">
+                <li className="hover:underline cursor-pointer">INÍCIO</li>
+                <li className="hover:underline cursor-pointer">SOBRE</li>
+                <li className="hover:underline cursor-pointer">SERVIÇOS</li>
+                <li className="hover:underline cursor-pointer">PORTFÓLIO</li>
+              </ul>
+            </div>
+          </div>
+        </header>
+        <section className="w-full h-screen bg-cover bg-center flex relative md:px-30  ">
+          <div className="h-full flex flex-col text-left justify-center items-center md:items-start w-full md:w-[60%] text-white md:pl-8 px-6 gap-8">
+            <div className="text-center md:text-left">
+              <p className="text-3xl">DESENVOLVA SEU</p>
+              <p className="text-5xl md:text-7xl font-bold text-yellow-500">
+                NEGÓCIO
+              </p>
+              <p className="text-4xl md:text-5xl font-bold">CONOSCO</p>
+            </div>
+
+            <div className="w-full md:w-[40%]">
+              <h1 className=" md:text-base text-center md:text-left">
+                Lorem Ipsum is simply dummy text of the printing and typesetting
+                industry. Lorem Ipsum has been the industry’s standard dummy
+                text ever since the 1500s.
+              </h1>
+            </div>
+
+            <div className="flex flex-col md:flex-row gap-4 justify-center md:justify-start">
+              <button className="bg-yellow-500 font-bold hover:bg-yellow-600 text-white  md:text-sm px-4 md:px-6 py-2 md:py-3 rounded-full shadow-md transition-all cursor-pointer">
+                SOLICITAR ORÇAMENTO
+              </button>
+              <button className="border border-yellow-500 font-bold hover:bg-yellow-600   text-white hover:text-white  md:text-sm px-4 md:px-6 py-2 md:py-3 rounded-full shadow-md transition-all cursor-pointer">
+                PORTFOLIO
+              </button>
+            </div>
+          </div>
+        </section>
       </section>
 
       {/* Sobre nós */}
@@ -116,7 +164,6 @@ export default function Home() {
           </div>
         </motion.div>
       </section>
-
       {/* Serviços */}
       <section className="bg-gradient-to-br from-zinc-900 to-black py-20 px-6">
         <div className="max-w-6xl mx-auto text-center">
@@ -176,7 +223,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-
       {/* Benefícios */}
       <section className="bg-gray-100 px-6 py-20">
         <div className="max-w-5xl mx-auto">
@@ -206,7 +252,6 @@ export default function Home() {
           </ul>
         </div>
       </section>
-
       {/* Portfólio */}
       <section className="bg-neutral-900 px-4 py-20 text-white">
         <h2 className="text-4xl font-bold text-center mb-12">
@@ -276,7 +321,6 @@ export default function Home() {
           </button>
         </div>
       </section>
-
       {/* Depoimentos */}
       <section className="py-20 bg-white px-6 max-w-6xl mx-auto text-center">
         <h2 className="text-3xl font-semibold mb-6">
@@ -354,7 +398,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-
       {/* FAQ */}
       <section className="bg-gradient-to-br from-zinc-900 to-black py-20 px-6">
         <div className="max-w-4xl mx-auto text-center">
@@ -393,7 +436,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-
       {/* CTA Final */}
       <section id="contato" className="px-6 py-20 bg-gray-100">
         <div className="max-w-3xl mx-auto text-center">
@@ -420,7 +462,6 @@ export default function Home() {
           </a>
         </div>
       </section>
-
       {/* Rodapé */}
       <footer className="bg-white border-t border-gray-200 px-6 py-8 text-center text-sm text-gray-500">
         © {new Date().getFullYear()} DEVLUP. Todos os direitos reservados.
